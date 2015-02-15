@@ -7,8 +7,10 @@
 The following code will set the correct working directory and load my plotting 
 package:
 
+```{r}
 setwd("~/Repository/Coursera/RepData_PeerAssessment1")
 library(lattice)
+```
 
 The following code will read the data into R using the Read CSV function:
 
