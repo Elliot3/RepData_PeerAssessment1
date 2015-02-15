@@ -57,7 +57,41 @@ averageStepsPerInterval$interval[which.max(averageStepsPerInterval$steps)]
 
 ## Imputing missing values
 
+The following code calculates the number of missing values in the dataset:
 
+```{r}
+sum(is.na(data$steps))
+```
+
+My strategy to fill in the missing values is to take the average value of the 
+step column without the NAs and then to replace all of the NAs with that 
+average.
+
+The following code creates my dataset utilizing the above strategy to replace 
+the NAs:
+
+```{r}
+averageSteps <- mean(data$steps, na.rm=TRUE)
+data[is.na(data)] <- averageSteps
+```
+
+The following code creates the histogram of the total number of steps taken 
+each day and calculates the mean and median per day:
+
+```{r}
+stepsPerDayNA <- aggregate(formula=steps~date, data=data, FUN=sum, na.rm=TRUE)
+hist(stepsPerDayNA$steps, xlab="Steps per Day", ylab="Frequency", 
+    main="Frequency of Steps per Day")
+meanStepsPerDayNA <- mean(stepsPerDayNA$steps)
+medianStepsPerDayNA <- median(stepsPerDayNA$steps)
+```
+
+In regards to the Mean and Median post NA replacement:
+* The Mean has remained the same from the previous calculation
+* The Median has increased slightly from the previous calculation
+
+Broadly, the impact of imoutting missing data causes the estimate of total 
+daily numver of steps to increase.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
