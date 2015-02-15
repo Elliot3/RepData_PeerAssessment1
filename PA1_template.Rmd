@@ -4,11 +4,15 @@
 
 ## Loading and preprocessing the data
 
-The following code will set the correct working directory and then read the 
-data into R using the Read CSV function:
+The following code will set the correct working directory and load my plotting 
+package:
+
+setwd("~/Repository/Coursera/RepData_PeerAssessment1")
+library(lattice)
+
+The following code will read the data into R using the Read CSV function:
 
 ```{r}
-setwd("~/Repository/Coursera/RepData_PeerAssessment1")
 data <- read.csv("activity.csv", header=TRUE)
 ```
 
@@ -99,44 +103,30 @@ The following code will include in the dataset a new factor variable denoting wh
 
 ```{r}
 data$dayType <- as.POSIXlt(data$date)$wday
-data$dayType <- replace(stepsPerDayNA$dayType,
-    stepsPerDayNA$dayType==0, "weekend")
-data$dayType <- replace(stepsPerDayNA$dayType, 
-    stepsPerDayNA$dayType==1, "weekday")
-data$dayType <- replace(stepsPerDayNA$dayType, 
-    stepsPerDayNA$dayType==2, "weekday")
-data$dayType <- replace(stepsPerDayNA$dayType, 
-    stepsPerDayNA$dayType==3, "weekday")
-data$dayType <- replace(stepsPerDayNA$dayType, 
-    stepsPerDayNA$dayType==4, "weekday")
-data$dayType <- replace(stepsPerDayNA$dayType, 
-    stepsPerDayNA$dayType==5, "weekday")
-data$dayType <- replace(stepsPerDayNA$dayType, 
-    stepsPerDayNA$dayType==6, "weekend")
+data$dayType <- replace(data$dayType,
+    data$dayType==0, "weekend")
+data$dayType <- replace(data$dayType, 
+    data$dayType==1, "weekday")
+data$dayType <- replace(data$dayType, 
+    data$dayType==2, "weekday")
+data$dayType <- replace(data$dayType, 
+    data$dayType==3, "weekday")
+data$dayType <- replace(data$dayType, 
+    data$dayType==4, "weekday")
+data$dayType <- replace(data$dayType, 
+    data$dayType==5, "weekday")
+data$dayType <- replace(data$dayType, 
+    data$dayType==6, "weekend")
 ```
 
 The following code creates a panel plot containing a time series plot of the 5-
 minute interval and the average number of steps taken, averaged across all 
 weekdays and weekend days:
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```{r}
+plotData <- aggregate(steps~interval+dayType, data, mean)
+xyplot(steps~interval|factor(dayType), data=plotData, type="l")
+```
 
 
 
