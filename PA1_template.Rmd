@@ -32,8 +32,8 @@ The following code will calculate the mean and the median of the total number
 of steps taken each day:
 
 ```{r}
-meanStepsPerDay <- mean(stepsPerDay$steps, na.rm=TRUE)
-medianStepsPerDay <- median(stepsPerDay$steps, na.rm=TRUE)
+mean(stepsPerDay$steps, na.rm=TRUE)
+median(stepsPerDay$steps, na.rm=TRUE)
 ```
 
 ## What is the average daily activity pattern?
@@ -82,8 +82,8 @@ each day and calculates the mean and median per day:
 stepsPerDayNA <- aggregate(formula=steps~date, data=data, FUN=sum, na.rm=TRUE)
 hist(stepsPerDayNA$steps, xlab="Steps per Day", ylab="Frequency", 
     main="Frequency of Steps per Day")
-meanStepsPerDayNA <- mean(stepsPerDayNA$steps)
-medianStepsPerDayNA <- median(stepsPerDayNA$steps)
+mean(stepsPerDayNA$steps)
+median(stepsPerDayNA$steps)
 ```
 
 In regards to the Mean and Median post NA replacement:
@@ -91,8 +91,53 @@ In regards to the Mean and Median post NA replacement:
 * The Median has increased slightly from the previous calculation
 
 Broadly, the impact of imoutting missing data causes the estimate of total 
-daily numver of steps to increase.
+daily number of steps to increase.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+
+The following code will include in the dataset a new factor variable denoting whether a date is a weekday or a weekend:
+
+```{r}
+data$dayType <- as.POSIXlt(data$date)$wday
+data$dayType <- replace(stepsPerDayNA$dayType,
+    stepsPerDayNA$dayType==0, "weekend")
+data$dayType <- replace(stepsPerDayNA$dayType, 
+    stepsPerDayNA$dayType==1, "weekday")
+data$dayType <- replace(stepsPerDayNA$dayType, 
+    stepsPerDayNA$dayType==2, "weekday")
+data$dayType <- replace(stepsPerDayNA$dayType, 
+    stepsPerDayNA$dayType==3, "weekday")
+data$dayType <- replace(stepsPerDayNA$dayType, 
+    stepsPerDayNA$dayType==4, "weekday")
+data$dayType <- replace(stepsPerDayNA$dayType, 
+    stepsPerDayNA$dayType==5, "weekday")
+data$dayType <- replace(stepsPerDayNA$dayType, 
+    stepsPerDayNA$dayType==6, "weekend")
+```
+
+The following code creates a panel plot containing a time series plot of the 5-
+minute interval and the average number of steps taken, averaged across all 
+weekdays and weekend days:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
