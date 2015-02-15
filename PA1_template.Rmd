@@ -25,20 +25,35 @@ each day:
 
 ```{r}
 hist(stepsPerDay$steps, xlab="Steps per Day", ylab="Frequency", 
-main="Frequency of Steps per Day")
+    main="Frequency of Steps per Day")
 ```
 
 The following code will calculate the mean and the median of the total number 
 of steps taken each day:
 
 ```{r}
-meanStepsPerDay <- mean(data$steps, na.rm=TRUE)
-medianStepsPerDay <- median(data$steps, na.rm=TRUE)
+meanStepsPerDay <- mean(stepsPerDay$steps, na.rm=TRUE)
+medianStepsPerDay <- median(stepsPerDay$steps, na.rm=TRUE)
 ```
 
 ## What is the average daily activity pattern?
 
+The following code will create a time series plot which shows the average 
+number of steps taken, averaged across all days by interval:
 
+```{r}
+averageStepsPerInterval <- aggregate(formula=steps~interval, data=data, 
+    FUN=mean)
+plot(averageStepsPerInterval, type="l", xlab="Interval", ylab="Average Daily
+    Steps", main="Average Number of Steps by Interval")
+```
+
+The following code will show which 5-minute interval, on average across all 
+days, contains the maximum number of steps:
+
+```{r}
+averageStepsPerInterval$interval[which.max(averageStepsPerInterval$steps)]
+```
 
 ## Imputing missing values
 
